@@ -18,6 +18,10 @@ class GraphQLTestingTest extends TestCase
 
 	$this->assertEquals('custom', GraphQLTesting::getDriverName());
 
+	GraphQLTesting::useNullDriver();
+
+	$this->assertEquals('null', GraphQLTesting::getDriverName());
+
 	GraphQLTesting::useRebing();
 
 	$this->assertEquals('rebing', GraphQLTesting::getDriverName());
