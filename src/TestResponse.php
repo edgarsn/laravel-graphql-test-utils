@@ -106,23 +106,27 @@ class TestResponse extends LaravelTestResponse
 
     /**
      * @codeCoverageIgnore
-     * @return void
+     * @return $this
      */
-    public function assertNoGraphQLErrors(): void
+    public function assertNoGraphQLErrors(): static
     {
 	if ($this->hasGraphQLErrors()) {
 	    Assert::fail('Failed to assert that response has no errors.');
 	}
+
+	return $this;
     }
 
     /**
      * @codeCoverageIgnore
-     * @return void
+     * @return $this
      */
-    public function assertGraphQLUnauthorized(): void
+    public function assertGraphQLUnauthorized(): static
     {
 	$firstErrorMessage = $this->json('errors.0.message') ?? null;
 
 	Assert::assertEquals('Unauthorized', $firstErrorMessage);
+
+	return $this;
     }
 }
