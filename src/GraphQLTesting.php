@@ -52,6 +52,16 @@ class GraphQLTesting implements GraphQLTestingContract
     }
 
     /**
+     * Use null as default driver.
+     *
+     * @return void
+     */
+    public static function useNullDriver(): void
+    {
+	static::$defaultDriver = 'null';
+    }
+
+    /**
      * Use custom default driver.
      *
      * @param string $name

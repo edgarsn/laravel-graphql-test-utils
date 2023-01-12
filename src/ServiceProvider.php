@@ -6,6 +6,7 @@ namespace Newman\LaravelGraphQLTestUtils;
 
 use Newman\LaravelGraphQLTestUtils\Contracts\GraphQLBuilderContract;
 use Newman\LaravelGraphQLTestUtils\Contracts\GraphQLTestingContract;
+use Newman\LaravelGraphQLTestUtils\Drivers\NullDriver;
 use Newman\LaravelGraphQLTestUtils\Drivers\RebingDriver;
 
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
@@ -20,5 +21,6 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
 
 	// drivers
 	$this->app->bind('laravel-graphql-utils-driver:rebing', RebingDriver::class);
+	$this->app->bind('laravel-graphql-utils-driver:null', NullDriver::class);
     }
 }
