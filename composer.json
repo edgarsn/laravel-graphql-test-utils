@@ -1,0 +1,63 @@
+{
+	"name": "newman/laravel-graphql-test-utils",
+	"description": "Laravel GraphQL test utilities package. Helps you to test your GraphQL queries & mutations easily.",
+	"keywords": [
+		"graphql",
+		"laravel",
+		"testing",
+		"tests",
+		"utils",
+		"rebing"
+	],
+	"type": "library",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Edgars Neimanis",
+			"email": "neimanis.edgars@gmail.com"
+		}
+	],
+	"require": {
+		"php": "^8.0",
+		"illuminate/contracts": "^8.12|^9.0",
+		"illuminate/support": "^8.12|^9.0",
+		"illuminate/testing": "^8.12|^9.0"
+	},
+	"require-dev": {
+		"friendsofphp/php-cs-fixer": "^3.0",
+		"nunomaduro/larastan": "^1.0",
+		"orchestra/testbench": "^6.0|^7.0",
+		"phpunit/phpunit": "^8.0|^9.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"Newman\\LaravelGraphQLTestUtils\\": "src/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Newman\\LaravelGraphQLTestUtils\\Tests\\": "tests/"
+		}
+	},
+	"scripts": {
+		"phpstan": "phpstan analyse --memory-limit=256M",
+		"lint": "php-cs-fixer fix --diff --dry-run",
+		"fix-style": "php-cs-fixer fix",
+		"test": "./vendor/bin/phpunit --colors=always --verbose",
+		"test-coverage": "php -dpcov.enabled=1 -dpcov.directory=src/ -dpcov.exclude=\"~vendor~\" ./vendor/bin/phpunit --colors=always --verbose --coverage-text",
+		"test-coverage-html": "php -dpcov.enabled=1 -dpcov.directory=src/ -dpcov.exclude=\"~vendor~\" ./vendor/bin/phpunit --colors=always --verbose --coverage-html phpunit-coverage"
+	},
+	"extra": {
+		"laravel": {
+			"providers": [
+				"Newman\\LaravelGraphQLTestUtils\\ServiceProvider"
+			]
+		}
+	},
+	"minimum-stability": "dev",
+	"prefer-stable": true,
+	"config": {
+		"preferred-install": "dist",
+		"sort-packages": true
+	}
+}
