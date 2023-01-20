@@ -39,7 +39,7 @@ class GraphQLRequest
 	    /** @var LaravelTestResponse $response */
 
 	    // @codeCoverageIgnoreStart
-	    /** @var Collection $collection */
+	    /** @var Collection<int, mixed> $collection */
 	    $collection = $this->app->bound(LoggedExceptionCollection::class)
 		? $this->app->make(LoggedExceptionCollection::class)
 		: new LoggedExceptionCollection;
