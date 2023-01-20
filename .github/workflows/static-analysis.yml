@@ -12,53 +12,39 @@ jobs:
     env:
       COMPOSER_NO_INTERACTION: 1
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - uses: shivammathur/setup-php@v2
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
         with:
           php-version: 8.1
           coverage: none
 
-      - name: Get composer cache directory
-        id: composercache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
-        
-      - name: Cache dependencies
-        uses: actions/cache@v2
-        with:
-          path: ${{ steps.composercache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
-          restore-keys: ${{ runner.os }}-composer-
-          
-      - run: composer update --prefer-dist --no-progress
-      
-      - run: composer phpstan -- --no-progress
-      
+      - name: Install dependencies
+        run: |
+          composer update --prefer-dist --no-interaction --no-progress
+
+      - name: Run PHPStan
+        run: composer phpstan -- --no-progress
+
   style:
     name: PHP-CS-Fixer Analysis
     runs-on: ubuntu-latest
     env:
       COMPOSER_NO_INTERACTION: 1
     steps:
-      - uses: actions/checkout@v2
-      
-      - uses: shivammathur/setup-php@v2
+      - uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
         with:
           php-version: 8.1
           coverage: none
 
-      - name: Get composer cache directory
-        id: composercache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
-        
-      - name: Cache dependencies
-        uses: actions/cache@v2
-        with:
-          path: ${{ steps.composercache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
-          restore-keys: ${{ runner.os }}-composer-
-          
-      - run: composer update --prefer-dist --no-progress
-      
-      - run: composer lint
-      
+      - name: Install dependencies
+        run: |
+          composer update --prefer-dist --no-interaction --no-progress
+
+      - name: Check style
+        run: composer lint
+
