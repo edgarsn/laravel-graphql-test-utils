@@ -4,7 +4,7 @@ This package helps you to test your GraphQL queries & mutations in your TestCase
 It works with any laravel GraphQL server.
 
 ## Requirements
-- Laravel 8.12+ / 9.0+
+- Laravel 8.12+, 9.0+, 10.0+
 - PHP 8.0+
 
 ## Installation
