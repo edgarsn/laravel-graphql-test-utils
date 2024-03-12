@@ -2,8 +2,9 @@ name: Static Analysis
 
 on:
   push:
-    - main
-    - '*.x'
+    branches:
+        - main
+        - '*.x'
   pull_request:
 
 jobs:
