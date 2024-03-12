@@ -19,15 +19,15 @@
 	],
 	"require": {
 		"php": "^8.0",
-		"illuminate/contracts": "^8.12|^9.0|^10.0",
-		"illuminate/support": "^8.12|^9.0|^10.0",
-		"illuminate/testing": "^8.12|^9.0|^10.0"
+		"illuminate/contracts": "^8.12|^9.0|^10.0|^11.0",
+		"illuminate/support": "^8.12|^9.0|^10.0|^11.0",
+		"illuminate/testing": "^8.12|^9.0|^10.0|^11.0"
 	},
 	"require-dev": {
 		"friendsofphp/php-cs-fixer": "^3.0",
-		"nunomaduro/larastan": "^1.0|^2.4",
-		"orchestra/testbench": "^6.0|^7.0|^8.0",
-		"phpunit/phpunit": "^8.0|^9.0"
+		"larastan/larastan": "^1.0|^2.4",
+		"orchestra/testbench": "^6.0|^7.0|^8.0|^9.0",
+		"phpunit/phpunit": "^8.0|^9.0|^10.0"
 	},
 	"autoload": {
 		"psr-4": {
@@ -43,9 +43,9 @@
 		"phpstan": "phpstan analyse --memory-limit=256M",
 		"lint": "php-cs-fixer fix --diff --dry-run",
 		"fix-style": "php-cs-fixer fix",
-		"test": "./vendor/bin/phpunit --colors=always --verbose",
-		"test-coverage": "php -dpcov.enabled=1 -dpcov.directory=src/ -dpcov.exclude=\"~vendor~\" ./vendor/bin/phpunit --colors=always --verbose --coverage-text",
-		"test-coverage-html": "php -dpcov.enabled=1 -dpcov.directory=src/ -dpcov.exclude=\"~vendor~\" ./vendor/bin/phpunit --colors=always --verbose --coverage-html phpunit-coverage"
+		"test": "./vendor/bin/phpunit --colors=always",
+		"test-coverage": "php -dpcov.enabled=1 -dpcov.directory=src/ -dpcov.exclude=\"~vendor~\" ./vendor/bin/phpunit --colors=always --coverage-text",
+		"test-coverage-html": "php -dpcov.enabled=1 -dpcov.directory=src/ -dpcov.exclude=\"~vendor~\" ./vendor/bin/phpunit --colors=always --coverage-html phpunit-coverage"
 	},
 	"extra": {
 		"laravel": {
