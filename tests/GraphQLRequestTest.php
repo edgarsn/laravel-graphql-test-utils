@@ -13,23 +13,23 @@ class GraphQLRequestTest extends TestCase
 {
     public function test_it_returns_default_response_handler(): void
     {
-	$request = new GraphQLRequest($this->app);
+        $request = new GraphQLRequest($this->app);
 
-	$response = $request->call('GET', '/simple');
+        $response = $request->call('GET', '/simple');
 
-	$this->assertInstanceOf(TestResponse::class, $response);
+        $this->assertInstanceOf(TestResponse::class, $response);
     }
 
     public function test_custom_response_handler(): void
     {
-	GraphQLTesting::useCustomResponseHandler(CustomTestResponse::class);
+        GraphQLTesting::useCustomResponseHandler(CustomTestResponse::class);
 
-	$request = new GraphQLRequest($this->app);
+        $request = new GraphQLRequest($this->app);
 
-	$response = $request->call('GET', '/simple');
+        $response = $request->call('GET', '/simple');
 
-	$this->assertInstanceOf(CustomTestResponse::class, $response);
+        $this->assertInstanceOf(CustomTestResponse::class, $response);
 
-	GraphQLTesting::useCustomResponseHandler(TestResponse::class);
+        GraphQLTesting::useCustomResponseHandler(TestResponse::class);
     }
 }

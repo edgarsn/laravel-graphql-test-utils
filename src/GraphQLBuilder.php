@@ -53,251 +53,252 @@ class GraphQLBuilder implements GraphQLBuilderContract
 
     public function __construct(Application $app)
     {
-	$this->app = $app;
-	$this->request = new GraphQLRequest($app);
+        $this->app = $app;
+        $this->request = new GraphQLRequest($app);
     }
 
     /**
-     * @param string $name
-     * @param string $value
      * @codeCoverageIgnore
+     *
      * @return $this
      */
     public function withHeader(string $name, string $value): static
     {
-	$this->request->withHeader($name, $value);
+        $this->request->withHeader($name, $value);
 
-	return $this;
+        return $this;
     }
 
     /**
-     * @param array<string, string> $headers
+     * @param  array<string, string>  $headers
+     *
      * @codeCoverageIgnore
+     *
      * @return $this
      */
     public function withHeaders(array $headers): static
     {
-	$this->request->withHeaders($headers);
+        $this->request->withHeaders($headers);
 
-	return $this;
+        return $this;
     }
 
     /**
-     * @param string $apiToken
      * @codeCoverageIgnore
+     *
      * @return $this
      */
     public function withToken(string $apiToken): static
     {
-	$this->request->withToken($apiToken);
+        $this->request->withToken($apiToken);
 
-	return $this;
+        return $this;
     }
 
     /**
      * @codeCoverageIgnore
+     *
      * @return $this
      */
     public function withoutToken(): static
     {
-	$this->request->withoutToken();
+        $this->request->withoutToken();
 
-	return $this;
+        return $this;
     }
 
     /**
-     * @param callable(GraphQLRequest $request): void $callback
+     * @param  callable(GraphQLRequest $request): void  $callback
+     *
      * @codeCoverageIgnore
+     *
      * @return $this
      */
     public function modifyRequest(callable $callback): static
     {
-	$callback($this->request);
+        $callback($this->request);
 
-	return $this;
+        return $this;
     }
 
     public function driver(string $name): static
     {
-	$this->driverName = $name;
+        $this->driverName = $name;
 
-	return $this;
+        return $this;
     }
 
     public function httpMethod(string $method): static
     {
-	$this->httpMethod = $method;
+        $this->httpMethod = $method;
 
-	return $this;
+        return $this;
     }
 
     public function schema(string $schema): static
     {
-	$this->schemaName = $schema;
+        $this->schemaName = $schema;
 
-	return $this;
+        return $this;
     }
 
     /**
-     * @param string $query
      * @codeCoverageIgnore
+     *
      * @return $this
      */
     public function setQuery(string $query): static
     {
-	$this->query = $query;
+        $this->query = $query;
 
-	return $this;
+        return $this;
     }
 
     /**
-     * @param array<string, mixed> $variables
+     * @param  array<string, mixed>  $variables
+     *
      * @codeCoverageIgnore
+     *
      * @return $this
      */
     public function setVariables(array $variables): static
     {
-	$this->variables = $variables;
+        $this->variables = $variables;
 
-	return $this;
+        return $this;
     }
 
     /**
-     * @param array<string, mixed> $variables
+     * @param  array<string, mixed>  $variables
      * @return $this
      */
     public function mergeVariables(array $variables): static
     {
-	$this->variables = array_merge($this->variables, $variables);
+        $this->variables = array_merge($this->variables, $variables);
 
-	return $this;
+        return $this;
     }
 
     /**
-     * @param string $key
-     * @param mixed $value
      * @codeCoverageIgnore
+     *
      * @return $this
      */
     public function setVariable(string $key, mixed $value): static
     {
-	$this->variables[$key] = $value;
+        $this->variables[$key] = $value;
 
-	return $this;
+        return $this;
     }
 
     /**
-     * @param bool $with
      * @codeCoverageIgnore
+     *
      * @return $this
      */
     public function withDefaultAssertions(bool $with = true): static
     {
-	$this->withoutDefaultAssertions = !$with;
+        $this->withoutDefaultAssertions = ! $with;
 
-	return $this;
+        return $this;
     }
 
     /**
      * @codeCoverageIgnore
+     *
      * @return $this
      */
     public function withoutDefaultAssertions(): static
     {
-	return $this->withDefaultAssertions(false);
+        return $this->withDefaultAssertions(false);
     }
 
     /**
-     * @param string|null $query
-     * @param array<string, mixed> $variables
-     * @return TestResponse
+     * @param  array<string, mixed>  $variables
      */
     public function call(?string $query = null, array $variables = []): TestResponse
     {
-	$query = $query ?? $this->query;
-	$variables = array_merge($this->variables, $variables);
+        $query = $query ?? $this->query;
+        $variables = array_merge($this->variables, $variables);
 
-	if (empty($query)) {
-	    throw new GraphQLQueryNotProvidedException('GraphQL query is not provided.');
-	}
+        if (empty($query)) {
+            throw new GraphQLQueryNotProvidedException('GraphQL query is not provided.');
+        }
 
-	$uri = $this->resolveBaseUrl();
-	$httpMethod = $this->resolveHttpMethod();
+        $uri = $this->resolveBaseUrl();
+        $httpMethod = $this->resolveHttpMethod();
 
-	$data = [
-	    'query' => $query,
-	    'variables' => $variables,
-	];
+        $data = [
+            'query' => $query,
+            'variables' => $variables,
+        ];
 
-	if ($httpMethod == 'POST') {
-	    /** @var TestResponse $response */
-	    $response = $this->request->post($uri, $data);
-	} else {
-	    $data['variables'] = json_encode($data['variables']);
+        if ($httpMethod == 'POST') {
+            /** @var TestResponse $response */
+            $response = $this->request->post($uri, $data);
+        } else {
+            $data['variables'] = json_encode($data['variables']);
 
-	    /** @var TestResponse $response */
-	    $response = $this->request->get($uri . '?' . http_build_query($data));
-	}
+            /** @var TestResponse $response */
+            $response = $this->request->get($uri.'?'.http_build_query($data));
+        }
 
-	$response->setQuery($query);
-	$response->setVariables($variables);
+        $response->setQuery($query);
+        $response->setVariables($variables);
 
-	$this->onAfterRequest($query, $variables, $response);
+        $this->onAfterRequest($query, $variables, $response);
 
-	return $response;
+        return $response;
     }
 
     protected function resolveDriverName(): string
     {
-	return $this->driverName ?? GraphQLTesting::getDriverName();
+        return $this->driverName ?? GraphQLTesting::getDriverName();
     }
 
     protected function resolveUrlPrefix(): string
     {
-	/** @var GraphQLTestingContract $graphqlTesting */
-	$graphqlTesting = $this->app->make(GraphQLTestingContract::class);
+        /** @var GraphQLTestingContract $graphqlTesting */
+        $graphqlTesting = $this->app->make(GraphQLTestingContract::class);
 
-	return $graphqlTesting->driver($this->resolveDriverName())->getUrlPrefix() ?? 'graphql';
+        return $graphqlTesting->driver($this->resolveDriverName())->getUrlPrefix() ?? 'graphql';
     }
 
     protected function resolveBaseUrl(): string
     {
-	$uri = '/' . $this->resolveUrlPrefix();
+        $uri = '/'.$this->resolveUrlPrefix();
 
-	if ($this->schemaName != 'default') {
-	    $uri .= '/' . $this->schemaName;
-	}
+        if ($this->schemaName != 'default') {
+            $uri .= '/'.$this->schemaName;
+        }
 
-	return $uri;
+        return $uri;
     }
 
     protected function resolveHttpMethod(): string
     {
-	/** @var GraphQLTestingContract $graphqlTesting */
-	$graphqlTesting = $this->app->make(GraphQLTestingContract::class);
+        /** @var GraphQLTestingContract $graphqlTesting */
+        $graphqlTesting = $this->app->make(GraphQLTestingContract::class);
 
-	return strtoupper($this->httpMethod ?? $graphqlTesting->driver($this->resolveDriverName())->getHttpMethodForSchema($this->schemaName) ?? 'POST');
+        return strtoupper($this->httpMethod ?? $graphqlTesting->driver($this->resolveDriverName())->getHttpMethodForSchema($this->schemaName) ?? 'POST');
     }
 
     protected function callDefaultAssertions(TestResponse $response): void
     {
-	$defaultAssertions = GraphQLTesting::getDefaultAssertions();
+        $defaultAssertions = GraphQLTesting::getDefaultAssertions();
 
-	if (is_callable($defaultAssertions)) {
-	    $defaultAssertions($response);
-	}
+        if (is_callable($defaultAssertions)) {
+            $defaultAssertions($response);
+        }
     }
 
     /**
-     * @param string $query
-     * @param array<string, mixed> $variables
-     * @param TestResponse $response
-     * @return void
+     * @param  array<string, mixed>  $variables
      */
     protected function onAfterRequest(string $query, array $variables, TestResponse $response): void
     {
-	if (!$this->withoutDefaultAssertions) {
-	    $this->callDefaultAssertions($response);
-	}
+        if (! $this->withoutDefaultAssertions) {
+            $this->callDefaultAssertions($response);
+        }
     }
 }

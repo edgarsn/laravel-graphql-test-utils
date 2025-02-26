@@ -11,77 +11,77 @@ use Newman\LaravelGraphQLTestUtils\TestResponse;
 
 class GraphQLBuilderTest extends TestCase
 {
-    public function test_merge_Variables(): void
+    public function test_merge_variables(): void
     {
-	$builder = new GraphQLBuilder($this->app);
+        $builder = new GraphQLBuilder($this->app);
 
-	$response = $builder->setVariables(['a' => 1, 'b' => 2])
-	    ->mergeVariables(['c' => 3, 'b' => 4])
-	    ->httpMethod('get')
-	    ->call('query { cars }');
+        $response = $builder->setVariables(['a' => 1, 'b' => 2])
+            ->mergeVariables(['c' => 3, 'b' => 4])
+            ->httpMethod('get')
+            ->call('query { cars }');
 
-	$this->assertEquals(['a' => 1, 'b' => 4, 'c' => 3], $response->getVariables());
-	$this->assertEquals([
-	    'cars' => [
-		['title' => 'Skoda'],
-		['title' => 'Audi'],
-	    ],
-	], $response->json('data'));
+        $this->assertEquals(['a' => 1, 'b' => 4, 'c' => 3], $response->getVariables());
+        $this->assertEquals([
+            'cars' => [
+                ['title' => 'Skoda'],
+                ['title' => 'Audi'],
+            ],
+        ], $response->json('data'));
     }
 
     public function test_it_throws_exception_when_query_is_not_provided(): void
     {
-	$builder = new GraphQLBuilder($this->app);
+        $builder = new GraphQLBuilder($this->app);
 
-	$this->expectException(GraphQLQueryNotProvidedException::class);
+        $this->expectException(GraphQLQueryNotProvidedException::class);
 
-	$builder->call();
+        $builder->call();
     }
 
     public function test_schema(): void
     {
-	$builder = new GraphQLBuilder($this->app);
+        $builder = new GraphQLBuilder($this->app);
 
-	$response = $builder->schema('postable')->call('query { cars }');
+        $response = $builder->schema('postable')->call('query { cars }');
 
-	$this->assertEquals(['success' => true], $response->json('data'));
+        $this->assertEquals(['success' => true], $response->json('data'));
     }
 
     public function test_driver(): void
     {
-	$builder = new GraphQLBuilder($this->app);
+        $builder = new GraphQLBuilder($this->app);
 
-	$response = $builder->driver('lorem')->call('query { brands }');
+        $response = $builder->driver('lorem')->call('query { brands }');
 
-	$this->assertEquals([
-	    'brands' => [
-		['title' => 'Snickers'],
-		['title' => 'Coca-Cola'],
-	    ]
-	], $response->json('data'));
+        $this->assertEquals([
+            'brands' => [
+                ['title' => 'Snickers'],
+                ['title' => 'Coca-Cola'],
+            ],
+        ], $response->json('data'));
     }
 
     public function test_default_assertions(): void
     {
-	static $is_callable_called = false;
+        static $is_callable_called = false;
 
-	GraphQLTesting::defaultAssertions(function (TestResponse $response) use (&$is_callable_called) {
-	    $is_callable_called = true;
-	});
+        GraphQLTesting::defaultAssertions(function (TestResponse $response) use (&$is_callable_called) {
+            $is_callable_called = true;
+        });
 
-	$builder = new GraphQLBuilder($this->app);
+        $builder = new GraphQLBuilder($this->app);
 
-	$builder->httpMethod('get')
-	    ->call('query { cars }');
+        $builder->httpMethod('get')
+            ->call('query { cars }');
 
-	$this->assertTrue($is_callable_called);
+        $this->assertTrue($is_callable_called);
 
-	$is_callable_called = false;
+        $is_callable_called = false;
 
-	$builder->httpMethod('get')
-	    ->withoutDefaultAssertions()
-	    ->call('query { cars }');
+        $builder->httpMethod('get')
+            ->withoutDefaultAssertions()
+            ->call('query { cars }');
 
-	$this->assertFalse($is_callable_called);
+        $this->assertFalse($is_callable_called);
     }
 }

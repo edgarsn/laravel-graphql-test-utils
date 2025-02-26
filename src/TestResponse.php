@@ -25,21 +25,20 @@ class TestResponse extends LaravelTestResponse
 
     public function setQuery(string $query): void
     {
-	$this->query = $query;
+        $this->query = $query;
     }
 
     public function getQuery(): string
     {
-	return $this->query;
+        return $this->query;
     }
 
     /**
-     * @param array<string, mixed> $variables
-     * @return void
+     * @param  array<string, mixed>  $variables
      */
     public function setVariables(array $variables): void
     {
-	$this->variables = $variables;
+        $this->variables = $variables;
     }
 
     /**
@@ -47,12 +46,12 @@ class TestResponse extends LaravelTestResponse
      */
     public function getVariables(): array
     {
-	return $this->variables;
+        return $this->variables;
     }
 
     public function getVariable(string $key): mixed
     {
-	return array_key_exists($key, $this->variables) ? $this->variables[$key] : null;
+        return array_key_exists($key, $this->variables) ? $this->variables[$key] : null;
     }
 
     /**
@@ -60,15 +59,15 @@ class TestResponse extends LaravelTestResponse
      */
     public function getGraphQLErrors(): ?array
     {
-	/** @var array<array<string, mixed>>|null $errors */
-	$errors = $this->json('errors');
+        /** @var array<array<string, mixed>>|null $errors */
+        $errors = $this->json('errors');
 
-	return $errors;
+        return $errors;
     }
 
     public function hasGraphQLErrors(): bool
     {
-	return !empty($this->json('errors'));
+        return ! empty($this->json('errors'));
     }
 
     /**
@@ -76,60 +75,61 @@ class TestResponse extends LaravelTestResponse
      */
     public function getGraphQLValidationMessages(): array
     {
-	$messages = $this->json('errors.0.extensions.validation') ?? [];
+        $messages = $this->json('errors.0.extensions.validation') ?? [];
 
-	return is_array($messages) ? $messages : [];
+        return is_array($messages) ? $messages : [];
     }
 
     /**
-     * @param string $field
      * @return array<string>
      */
     public function getValidationFieldMessages(string $field): array
     {
-	$messages = $this->getGraphQLValidationMessages();
+        $messages = $this->getGraphQLValidationMessages();
 
-	if (empty($messages)) {
-	    return [];
-	}
+        if (empty($messages)) {
+            return [];
+        }
 
-	/** @var array<string> $fieldMessages */
-	$fieldMessages = Arr::get($messages, $field, []);
+        /** @var array<string> $fieldMessages */
+        $fieldMessages = Arr::get($messages, $field, []);
 
-	return $fieldMessages;
+        return $fieldMessages;
     }
 
     public function getValidationFieldFirstMessage(string $field): ?string
     {
-	/** @var string|null $firstMessage */
-	$firstMessage = Arr::first($this->getValidationFieldMessages($field));
+        /** @var string|null $firstMessage */
+        $firstMessage = Arr::first($this->getValidationFieldMessages($field));
 
-	return $firstMessage;
+        return $firstMessage;
     }
 
     /**
      * @codeCoverageIgnore
+     *
      * @return $this
      */
     public function assertNoGraphQLErrors(): static
     {
-	if ($this->hasGraphQLErrors()) {
-	    Assert::fail('Failed to assert that response has no errors.');
-	}
+        if ($this->hasGraphQLErrors()) {
+            Assert::fail('Failed to assert that response has no errors.');
+        }
 
-	return $this;
+        return $this;
     }
 
     /**
      * @codeCoverageIgnore
+     *
      * @return $this
      */
     public function assertGraphQLUnauthorized(): static
     {
-	$firstErrorMessage = $this->json('errors.0.message') ?? null;
+        $firstErrorMessage = $this->json('errors.0.message') ?? null;
 
-	Assert::assertEquals('Unauthorized', $firstErrorMessage);
+        Assert::assertEquals('Unauthorized', $firstErrorMessage);
 
-	return $this;
+        return $this;
     }
 }

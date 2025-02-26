@@ -6,7 +6,4 @@ namespace Newman\LaravelGraphQLTestUtils\Tests\Support;
 
 use Newman\LaravelGraphQLTestUtils\TestResponse;
 
-class CustomTestResponse extends TestResponse
-{
-
-}
+class CustomTestResponse extends TestResponse {}

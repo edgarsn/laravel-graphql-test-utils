@@ -22,17 +22,17 @@ class NullDriver implements DriverContract
 
     public function __construct(Container $app, ConfigContract $config)
     {
-	$this->app = $app;
-	$this->config = $config;
+        $this->app = $app;
+        $this->config = $config;
     }
 
     public function getUrlPrefix(): ?string
     {
-	return null;
+        return null;
     }
 
     public function getHttpMethodForSchema(string $schemaName): ?string
     {
-	return null;
+        return null;
     }
 }

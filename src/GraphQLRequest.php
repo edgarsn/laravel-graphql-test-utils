@@ -21,33 +21,33 @@ class GraphQLRequest
 
     public function __construct(Application $app)
     {
-	$this->app = $app;
+        $this->app = $app;
     }
 
     /**
      * Create the test response instance from the given response.
      *
-     * @param \Illuminate\Http\Response $response
+     * @param  \Illuminate\Http\Response  $response
      * @return LaravelTestResponse<\Symfony\Component\HttpFoundation\Response>
      */
     protected function createTestResponse($response)
     {
-	$testResponse = GraphQLTesting::getCustomResponseHandler();
+        $testResponse = GraphQLTesting::getCustomResponseHandler();
 
-	/** @var LaravelTestResponse<\Symfony\Component\HttpFoundation\Response> $result */
-	$result = tap(new $testResponse($response), function ($response) {
-	    /** @var LaravelTestResponse $response */
+        /** @var LaravelTestResponse<\Symfony\Component\HttpFoundation\Response> $result */
+        $result = tap(new $testResponse($response), function ($response) {
+            /** @var LaravelTestResponse $response */
 
-	    // @codeCoverageIgnoreStart
-	    /** @var Collection<int, mixed> $collection */
-	    $collection = $this->app->bound(LoggedExceptionCollection::class)
-		? $this->app->make(LoggedExceptionCollection::class)
-		: new LoggedExceptionCollection;
-	    // @codeCoverageIgnoreEnd
+            // @codeCoverageIgnoreStart
+            /** @var Collection<int, mixed> $collection */
+            $collection = $this->app->bound(LoggedExceptionCollection::class)
+            ? $this->app->make(LoggedExceptionCollection::class)
+            : new LoggedExceptionCollection;
+            // @codeCoverageIgnoreEnd
 
-	    $response->withExceptions($collection);
-	});
+            $response->withExceptions($collection);
+        });
 
-	return $result;
+        return $result;
     }
 }

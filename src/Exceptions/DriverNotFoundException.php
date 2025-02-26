@@ -6,7 +6,4 @@ namespace Newman\LaravelGraphQLTestUtils\Exceptions;
 
 use RuntimeException;
 
-class DriverNotFoundException extends RuntimeException
-{
-
-}
+class DriverNotFoundException extends RuntimeException {}

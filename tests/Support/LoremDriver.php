@@ -20,17 +20,17 @@ class LoremDriver implements DriverContract
 
     public function __construct(Container $app, ConfigContract $config)
     {
-	$this->app = $app;
-	$this->config = $config;
+        $this->app = $app;
+        $this->config = $config;
     }
 
     public function getUrlPrefix(): ?string
     {
-	return 'lorem-graphql';
+        return 'lorem-graphql';
     }
 
     public function getHttpMethodForSchema(string $schemaName): ?string
     {
-	return 'GET';
+        return 'GET';
     }
 }

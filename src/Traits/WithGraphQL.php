@@ -11,11 +11,11 @@ trait WithGraphQL
 {
     public function graphql(): GraphQLBuilderContract
     {
-	/** @var Application $app */
-	$app = $this->app ?? app();
+        /** @var Application $app */
+        $app = $this->app ?? app();
 
-	$graphql = $app->make(GraphQLBuilderContract::class);
+        $graphql = $app->make(GraphQLBuilderContract::class);
 
-	return new $graphql($app);
+        return new $graphql($app);
     }
 }

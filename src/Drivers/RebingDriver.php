@@ -22,23 +22,23 @@ class RebingDriver implements DriverContract
 
     public function __construct(Container $app, ConfigContract $config)
     {
-	$this->app = $app;
-	$this->config = $config;
+        $this->app = $app;
+        $this->config = $config;
     }
 
     public function getUrlPrefix(): ?string
     {
-	/** @var string|null $routePrefix */
-	$routePrefix = $this->config->get('graphql.route.prefix');
+        /** @var string|null $routePrefix */
+        $routePrefix = $this->config->get('graphql.route.prefix');
 
-	return $routePrefix;
+        return $routePrefix;
     }
 
     public function getHttpMethodForSchema(string $schemaName): ?string
     {
-	/** @var string|null $method */
-	$method = $this->config->get('graphql.schemas.' . $schemaName . '.method.0');
+        /** @var string|null $method */
+        $method = $this->config->get('graphql.schemas.'.$schemaName.'.method.0');
 
-	return $method;
+        return $method;
     }
 }

@@ -6,7 +6,4 @@ namespace Newman\LaravelGraphQLTestUtils\Exceptions;
 
 use RuntimeException;
 
-class GraphQLQueryNotProvidedException extends RuntimeException
-{
-
-}
+class GraphQLQueryNotProvidedException extends RuntimeException {}

@@ -16,11 +16,11 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function register(): void
     {
-	$this->app->bind(GraphQLBuilderContract::class, GraphQLBuilder::class);
-	$this->app->bind(GraphQLTestingContract::class, GraphQLTesting::class);
+        $this->app->bind(GraphQLBuilderContract::class, GraphQLBuilder::class);
+        $this->app->bind(GraphQLTestingContract::class, GraphQLTesting::class);
 
-	// drivers
-	$this->app->bind('laravel-graphql-utils-driver:rebing', RebingDriver::class);
-	$this->app->bind('laravel-graphql-utils-driver:null', NullDriver::class);
+        // drivers
+        $this->app->bind('laravel-graphql-utils-driver:rebing', RebingDriver::class);
+        $this->app->bind('laravel-graphql-utils-driver:null', NullDriver::class);
     }
 }

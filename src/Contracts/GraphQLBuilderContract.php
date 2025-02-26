@@ -9,9 +9,7 @@ use Newman\LaravelGraphQLTestUtils\TestResponse;
 interface GraphQLBuilderContract
 {
     /**
-     * @param string|null $query
-     * @param array<string, mixed> $variables
-     * @return TestResponse
+     * @param  array<string, mixed>  $variables
      */
     public function call(?string $query = null, array $variables = []): TestResponse;
 }

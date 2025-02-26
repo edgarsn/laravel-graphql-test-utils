@@ -15,6 +15,6 @@ class ClassWithGraphQLTrait
 
     public function __construct(Application $app)
     {
-	$this->app = $app;
+        $this->app = $app;
     }
 }

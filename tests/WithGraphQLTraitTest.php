@@ -11,8 +11,8 @@ class WithGraphQLTraitTest extends TestCase
 {
     public function test(): void
     {
-	$testClass = new ClassWithGraphQLTrait($this->app);
+        $testClass = new ClassWithGraphQLTrait($this->app);
 
-	$this->assertInstanceOf(GraphQLBuilder::class, $testClass->graphql());
+        $this->assertInstanceOf(GraphQLBuilder::class, $testClass->graphql());
     }
 }

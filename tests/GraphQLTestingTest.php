@@ -14,47 +14,45 @@ class GraphQLTestingTest extends TestCase
 {
     public function test_it_can_set_different_drivers(): void
     {
-	GraphQLTesting::useDriver('custom');
+        GraphQLTesting::useDriver('custom');
 
-	$this->assertEquals('custom', GraphQLTesting::getDriverName());
+        $this->assertEquals('custom', GraphQLTesting::getDriverName());
 
-	GraphQLTesting::useNullDriver();
+        GraphQLTesting::useNullDriver();
 
-	$this->assertEquals('null', GraphQLTesting::getDriverName());
+        $this->assertEquals('null', GraphQLTesting::getDriverName());
 
-	GraphQLTesting::useRebing();
+        GraphQLTesting::useRebing();
 
-	$this->assertEquals('rebing', GraphQLTesting::getDriverName());
+        $this->assertEquals('rebing', GraphQLTesting::getDriverName());
     }
 
     public function test_it_returns_driver_instance(): void
     {
-	/** @var GraphQLTestingContract $testingInstance */
-	$testingInstance = $this->app->make(GraphQLTestingContract::class);
+        /** @var GraphQLTestingContract $testingInstance */
+        $testingInstance = $this->app->make(GraphQLTestingContract::class);
 
-	$this->assertInstanceOf(RebingDriver::class, $testingInstance->driver('rebing'));
+        $this->assertInstanceOf(RebingDriver::class, $testingInstance->driver('rebing'));
     }
 
     public function test_it_throws_exception_when_non_existing_driver_is_passed(): void
     {
-	/** @var GraphQLTestingContract $testingInstance */
-	$testingInstance = $this->app->make(GraphQLTestingContract::class);
+        /** @var GraphQLTestingContract $testingInstance */
+        $testingInstance = $this->app->make(GraphQLTestingContract::class);
 
-	$this->expectException(DriverNotFoundException::class);
+        $this->expectException(DriverNotFoundException::class);
 
-	$testingInstance->driver('abc');
+        $testingInstance->driver('abc');
     }
 
     public function test_default_assertions(): void
     {
-	GraphQLTesting::defaultAssertions(function (TestResponse $response) {
+        GraphQLTesting::defaultAssertions(function (TestResponse $response) {});
 
-	});
+        $this->assertIsCallable(GraphQLTesting::getDefaultAssertions());
 
-	$this->assertIsCallable(GraphQLTesting::getDefaultAssertions());
+        GraphQLTesting::defaultAssertions(null);
 
-	GraphQLTesting::defaultAssertions(null);
-
-	$this->assertNull(GraphQLTesting::getDefaultAssertions());
+        $this->assertNull(GraphQLTesting::getDefaultAssertions());
     }
 }

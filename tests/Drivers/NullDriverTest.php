@@ -11,17 +11,17 @@ class NullDriverTest extends TestCase
 {
     public function test_it_returns_expected_url_prefix(): void
     {
-	$this->assertNull($this->getDriver()->getUrlPrefix());
+        $this->assertNull($this->getDriver()->getUrlPrefix());
     }
 
     public function test_it_returns_expected_http_method(): void
     {
-	$this->assertNull($this->getDriver()->getHttpMethodForSchema('default'));
-	$this->assertNull($this->getDriver()->getHttpMethodForSchema('postable'));
+        $this->assertNull($this->getDriver()->getHttpMethodForSchema('default'));
+        $this->assertNull($this->getDriver()->getHttpMethodForSchema('postable'));
     }
 
     private function getDriver(): NullDriver
     {
-	return $this->app->make('laravel-graphql-utils-driver:null');
+        return $this->app->make('laravel-graphql-utils-driver:null');
     }
 }
