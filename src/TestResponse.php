@@ -77,7 +77,12 @@ class TestResponse extends LaravelTestResponse
     {
         $messages = $this->json('errors.0.extensions.validation') ?? [];
 
-        return is_array($messages) ? $messages : [];
+        if (is_array($messages)) {
+            /** @var array<string, array<string>> $messages */
+            return $messages;
+        } else {
+            return [];
+        }
     }
 
     /**
