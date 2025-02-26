@@ -24,8 +24,8 @@
 		"illuminate/testing": "^10.0|^11.0"
 	},
 	"require-dev": {
-		"friendsofphp/php-cs-fixer": "^3.0",
 		"larastan/larastan": "^2.4",
+		"laravel/pint": "^1.21",
 		"orchestra/testbench": "^8.0|^9.0",
 		"phpunit/phpunit": "^9.0|^10.0"
 	},
@@ -41,8 +41,8 @@
 	},
 	"scripts": {
 		"phpstan": "phpstan analyse --memory-limit=256M",
-		"lint": "php-cs-fixer fix --diff --dry-run",
-		"fix-style": "php-cs-fixer fix",
+		"lint": "pint --test",
+		"fix-style": "pint",
 		"test": "./vendor/bin/phpunit --colors=always",
 		"test-coverage": "php -dpcov.enabled=1 -dpcov.directory=src/ -dpcov.exclude=\"~vendor~\" ./vendor/bin/phpunit --colors=always --coverage-text",
 		"test-coverage-html": "php -dpcov.enabled=1 -dpcov.directory=src/ -dpcov.exclude=\"~vendor~\" ./vendor/bin/phpunit --colors=always --coverage-html phpunit-coverage"
