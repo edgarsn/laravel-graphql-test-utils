@@ -8,6 +8,9 @@ use Illuminate\Support\Arr;
 use Illuminate\Testing\Assert;
 use Illuminate\Testing\TestResponse as LaravelTestResponse;
 
+/**
+ * @extends LaravelTestResponse<\Symfony\Component\HttpFoundation\Response>
+ */
 class TestResponse extends LaravelTestResponse
 {
     /**

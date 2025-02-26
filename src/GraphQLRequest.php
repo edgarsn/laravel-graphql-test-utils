@@ -28,13 +28,13 @@ class GraphQLRequest
      * Create the test response instance from the given response.
      *
      * @param \Illuminate\Http\Response $response
-     * @return LaravelTestResponse
+     * @return LaravelTestResponse<\Symfony\Component\HttpFoundation\Response>
      */
     protected function createTestResponse($response)
     {
 	$testResponse = GraphQLTesting::getCustomResponseHandler();
 
-	/** @var LaravelTestResponse $result */
+	/** @var LaravelTestResponse<\Symfony\Component\HttpFoundation\Response> $result */
 	$result = tap(new $testResponse($response), function ($response) {
 	    /** @var LaravelTestResponse $response */
 
