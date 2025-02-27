@@ -27,7 +27,7 @@
 		"larastan/larastan": "^2.4|^3.0",
 		"laravel/pint": "^1.16",
 		"orchestra/testbench": "^8.0|^9.0|^10.0",
-		"phpunit/phpunit": "^9.0|^10.0|^11.5"
+		"phpunit/phpunit": "^10.0|^11.5"
 	},
 	"autoload": {
 		"psr-4": {
